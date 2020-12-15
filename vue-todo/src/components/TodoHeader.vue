@@ -1,12 +1,15 @@
 <template>
-  <div id="app">
+  <div>
+    header
   </div>
 </template>
 
 <script>
 export default {
+
 }
 </script>
 
 <style>
+
 </style>
