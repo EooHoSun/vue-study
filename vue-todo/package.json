@@ -2,7 +2,7 @@
   "name": "vue-todo",
   "description": "A Vue.js project",
   "version": "1.0.0",
-  "author": "ayeon",
+  "author": "eoohosun <redysj0517@naver.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
