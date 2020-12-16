@@ -3,7 +3,7 @@
     <TodoHeader/>
     <TodoInput/>
     <TodoList/>
-    <TodoFooter/>
+    <TodoFooter v-on:clearTodo="clearTodo"/>
   </div>
 </template>
 
@@ -18,6 +18,11 @@ const Todo = {
     'TodoInput' : TodoInput,
     'TodoList' : TodoList,
     'TodoFooter' : TodoFooter
+  },
+  methods : {
+    clearTodo : function(){
+      
+    }
   }
 };
 export default Todo;

@@ -2,7 +2,7 @@
   <div>
       <ul>
             <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem" class="shadow">
-                <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted:todoItem.completed}"  v-on:click="toggleComplete(index)"></i>
+                <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted:todoItem.completed}"  v-on:click="toggleComplete(todoItem)"></i>
                 <span v-bind:class="{textCompleted:todoItem.completed}">{{todoItem.item}}</span>
                 <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
                     <i class="fa fa-trash" aria-hidden="true"></i>
@@ -27,11 +27,15 @@ export default {
     methods : {
         removeTodo : function(todoItem, index){
             this.todoItems.splice(index, 1);
+            this.setLocalStorage();
+        },
+        toggleComplete : function(todoItem) {
+            todoItem.completed = !todoItem.completed;
+            this.setLocalStorage();
+        },
+        setLocalStorage : function() {
             localStorage.todoItems = JSON.stringify(this.todoItems);
-        },
-        toggleComplete : function(index) {
-            this.todoItems[index].completed = !this.todoItems[index].completed;
-        },
+        }
     }
 }
 </script>
