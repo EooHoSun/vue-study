@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="inputBox shadow">
     <input type="text" v-model="newTodoItem">
-    <button v-on:click="addTodo">add</button>
+    <span class="addContainer">
+      <i class="fa fa-plus addBtn" v-on:click="addTodo"></i>
+    </span>
   </div>
 </template>
 
@@ -13,14 +15,43 @@ export default {
     };
   },
   methods:{
-    addTodo : function(){
-      console.log(this.newTodoItem);
-      this.$emit("newTodoItem");
+    addTodo : function() {
+      localStorage.getItem('todoItems') ? localStorage.todoItems += ','+this.newTodoItem : localStorage.setItem('todoItems',this.newTodoItem);
+      this.clearInput();
     },
+    clearInput : function() {
+      this.newTodoItem = '';
+    }
   }
 }
 </script>
 
-<style>
-
+<style scoped>
+input:focus{
+  outline:none;
+}
+.inputBox{
+  background:white;
+  height:50px;
+  line-height: 50px;
+  border-radius : 5px;
+}
+.inputBox input{
+  border-style:none;
+  font-size:0.5rem;
+}
+.addContainer{
+  float:right;
+  background:linear-gradient(to right, #6478FB, #8763FB);
+  width : 3rem;
+  border-radius: 0 5px 5px 0;
+}
+.addBtn {
+  color:white;
+  vertical-align: middle;
+  cursor: pointer;
+}
+ .shadow {
+   box-shadow : 5px 10px 10px rgba(0,0,0,0.03);
+ }
 </style>
