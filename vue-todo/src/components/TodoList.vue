@@ -1,9 +1,9 @@
 <template>
   <div>
       <ul>
-            <li v-for="todoItem in todoItems" v-bind:key="todoItem" class="shadow">
+            <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem" class="shadow">
               {{todoItem}}
-              <span class="removeBtn" v-on:click="removeTodo">
+              <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
                   <i class="fa fa-trash" aria-hidden="true"></i>
               </span>
             </li>
@@ -24,8 +24,9 @@ export default {
         
     },
     methods : {
-        removeTodo : function(){
-            
+        removeTodo : function(todoItem, index){
+            this.todoItems.splice(index, 1);
+            localStorage.todoItems = JSON.stringify(this.todoItems);
         }
     }
 }
@@ -59,5 +60,6 @@ li{
 .removeBtn{
     margin-left:auto;
     color:chocolate;
+    cursor: pointer;
 }
 </style>
