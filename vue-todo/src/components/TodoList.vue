@@ -2,10 +2,11 @@
   <div>
       <ul>
             <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem" class="shadow">
-              {{todoItem}}
-              <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-              </span>
+                <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted:todoItem.completed}"  v-on:click="toggleComplete(index)"></i>
+                <span v-bind:class="{textCompleted:todoItem.completed}">{{todoItem.item}}</span>
+                <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </span>
             </li>
       </ul>
   </div>
@@ -27,7 +28,10 @@ export default {
         removeTodo : function(todoItem, index){
             this.todoItems.splice(index, 1);
             localStorage.todoItems = JSON.stringify(this.todoItems);
-        }
+        },
+        toggleComplete : function(index) {
+            this.todoItems[index].completed = !this.todoItems[index].completed;
+        },
     }
 }
 </script>
@@ -61,5 +65,18 @@ li{
     margin-left:auto;
     color:chocolate;
     cursor: pointer;
+}
+.checkBtn {
+    line-height:45px;
+    color:#62acde;
+    margin-right:5px;
+    cursor: pointer;
+}
+.checkBtnCompleted {
+    color : #b3adad;
+}
+.textCompleted {
+    text-decoration : line-through;
+    color : #b3adad;
 }
 </style>
