@@ -8,6 +8,9 @@
 </template>
 
 <script>
+const addArr = (str, ele)=>{
+  return JSON.stringify(JSON.parse(str).concat(ele));
+};
 export default {
   data : function(){
     return {
@@ -16,7 +19,7 @@ export default {
   },
   methods:{
     addTodo : function() {
-      localStorage.getItem('todoItems') ? localStorage.setItem('todoItems',JSON.stringify(JSON.parse(localStorage.getItem('todoItems')).concat(this.newTodoItem))) : localStorage.setItem('todoItems',JSON.stringify([this.newTodoItem]));
+      localStorage.getItem('todoItems') ? localStorage.setItem('todoItems',addArr(localStorage.getItem('todoItems')),this.newTodoItem) : localStorage.setItem('todoItems',JSON.stringify([this.newTodoItem]));
       this.clearInput();
     },
     clearInput : function() {
