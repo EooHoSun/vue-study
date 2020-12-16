@@ -20,7 +20,7 @@ export default {
     },
     created: function() {
         console.log('created list');
-        localStorage.getItem('todoItems') && (this.todoItems = localStorage['todoItems'].split(','));
+        localStorage.getItem('todoItems') && (this.todoItems = JSON.parse(localStorage['todoItems']));
         
     },
     methods : {
