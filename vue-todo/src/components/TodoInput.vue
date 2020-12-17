@@ -2,7 +2,7 @@
   <div class="inputBox shadow">
     <input type="text" v-model="newTodoItem" class="" @keyup="keyPrss">
     <span class="addContainer">
-      <i class="fa fa-plus addBtn" @click="addTodo"></i>
+      <i class="fa fa-plus addBtn" @click="addTodoEvent"></i>
     </span>
     <Modal v-if="showModal" @close="showModal = false" @click="showModal=false">
         <h4 slot="header">경고</h4>
@@ -12,7 +12,9 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import Modal from './common/Modal.vue';
+
 export default {
   data : function(){
     return {
@@ -21,11 +23,12 @@ export default {
     };
   },
   methods:{
-    addTodo() {
-      if(this.newTodoItem){
+    ...mapMutations(['addTodo']),
+    addTodoEvent() {
+      if(this.newTodoItem){ 
         const str = this.newTodoItem;
         this.clearInput();
-        this.$store.commit("addTodo", str);
+        this.addTodo(str);
       } else {
         this.showModal = true;
       }
@@ -34,7 +37,7 @@ export default {
       this.newTodoItem = '';
     },
     keyPrss(e){
-      e.key === "Enter" && this.addTodo();
+      e.key === "Enter" && this.addTodoEvent();
     }
   },
   components:{Modal}

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import {mapState, mapGetters,mapMutations, mapActions} from 'vuex';
 
 Vue.use(Vuex);
 const storage = {
@@ -16,6 +17,11 @@ const storage = {
 export const store = new Vuex.Store({
     state : {
         todoItems: storage.fetch(),
+    },
+    getters:{
+        getTodoItems(state){
+            return state.todoItems;
+        },
     },
     mutations:{
         addTodo(state, payload){
