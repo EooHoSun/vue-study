@@ -1,41 +1,26 @@
 <template>
   <div>
-      <ul>
-            <li v-for="(todoItem, index) in todoItems" v-bind:key="todoItem" class="shadow">
-                <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted:todoItem.completed}"  v-on:click="toggleComplete(todoItem)"></i>
-                <span v-bind:class="{textCompleted:todoItem.completed}">{{todoItem.item}}</span>
-                <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                </span>
-            </li>
-      </ul>
+  <transition-group name="list" tag="ul">   
+    <li v-for="(todoItem, index) in this.$store.state.todoItems" v-bind:key="todoItem" class="shadow">
+        <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted:todoItem.completed}"  v-on:click="toggleComplete(index)"></i>
+        <span v-bind:class="{textCompleted:todoItem.completed}">{{todoItem.item}}</span>
+        <span class="removeBtn" v-on:click="removeTodo(index)">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+        </span>
+    </li>
+  </transition-group>
   </div>
 </template>
 
 <script>
 export default {
-    data : function(){
-        return {
-            todoItems: []
-        };
-    },
-    created: function() {
-        console.log('created list');
-        localStorage.getItem('todoItems') && (this.todoItems = JSON.parse(localStorage['todoItems']));
-        
-    },
     methods : {
-        removeTodo : function(todoItem, index){
-            this.todoItems.splice(index, 1);
-            this.setLocalStorage();
+        removeTodo(index){
+            confirm("[" + this.$store.state.todoItems[index].item + "] 을/를 삭제하시겠습니까?") && this.$store.commit("removeTodo", index);
         },
-        toggleComplete : function(todoItem) {
-            todoItem.completed = !todoItem.completed;
-            this.setLocalStorage();
+        toggleComplete(index) {
+            this.$store.commit("toggleComplete", index);
         },
-        setLocalStorage : function() {
-            localStorage.todoItems = JSON.stringify(this.todoItems);
-        }
     }
 }
 </script>
@@ -56,6 +41,7 @@ li{
     padding :0 0.9rem;
     background:white;
     border-radius:5px;
+    
 }
 .checkBtn{
     line-height:45px;
@@ -82,5 +68,14 @@ li{
 .textCompleted {
     text-decoration : line-through;
     color : #b3adad;
+}
+
+
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>

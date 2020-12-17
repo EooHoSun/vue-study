@@ -1,38 +1,43 @@
 <template>
   <div class="inputBox shadow">
-    <input type="text" v-model="newTodoItem" class="">
+    <input type="text" v-model="newTodoItem" class="" @keyup="keyPrss">
     <span class="addContainer">
-      <i class="fa fa-plus addBtn" v-on:click="addTodo"></i>
+      <i class="fa fa-plus addBtn" @click="addTodo"></i>
     </span>
+    <Modal v-if="showModal" @close="showModal = false" @click="showModal=false">
+        <h4 slot="header">경고</h4>
+        <span slot="body">할 일을 적어주세요</span>
+    </Modal>
   </div>
 </template>
 
 <script>
+import Modal from './common/Modal.vue';
 export default {
   data : function(){
     return {
-      newTodoItem : ''
+      newTodoItem : '',
+      showModal : false
     };
   },
   methods:{
-    addTodo : function() {
-      const obj = {
-        completed : false,
-        item : this.newTodoItem
-      };
-      if(localStorage.getItem('todoItems')) {
-        const list = JSON.parse(localStorage.getItem('todoItems')).concat(obj);
-        localStorage.setItem('todoItems',JSON.stringify(list));
+    addTodo() {
+      if(this.newTodoItem){
+        const str = this.newTodoItem;
+        this.clearInput();
+        this.$store.commit("addTodo", str);
       } else {
-        localStorage.setItem('todoItems',JSON.stringify([obj]));
+        this.showModal = true;
       }
-
-      this.clearInput();
     },
-    clearInput : function() {
+    clearInput() {
       this.newTodoItem = '';
+    },
+    keyPrss(e){
+      e.key === "Enter" && this.addTodo();
     }
-  }
+  },
+  components:{Modal}
 }
 </script>
 
@@ -42,28 +47,32 @@ input:focus{
 }
 .inputBox{
   background:white;
-  height:50px;
-  line-height: 50px;
-  border-radius : 5px;
+  height:100%;
+  border-radius : 10%;
+  vertical-align: middle;
 }
 .inputBox input{
   border-style:none;
   font-size:0.5rem;
-  height : 80%;
-  width : 30rem;
+  height : 0.8em%;
+  width : 80%;
 }
 .addContainer{
   float:right;
   background:linear-gradient(to right, #6478FB, #8763FB);
-  width : 3rem;
-  border-radius: 0 5px 5px 0;
+  width : 15%;
+  height:100%;
+  border-radius: 0 5% 5% 0;
+  vertical-align: middle;
+  ;
 }
 .addBtn {
   color:white;
   vertical-align: middle;
   cursor: pointer;
+  font-size: 1rem;
 }
- .shadow {
-   box-shadow : 5px 10px 10px rgba(0,0,0,0.03);
- }
+.shadow {
+  box-shadow : 5px 10px 10px rgba(0,0,0,0.03);
+}
 </style>

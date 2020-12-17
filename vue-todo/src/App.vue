@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <TodoHeader/>
-    <TodoInput/>
-    <TodoList/>
-    <TodoFooter v-on:clearTodo="clearTodo"/>
+    <TodoHeader id="todo-header"/>
+    <TodoInput  id="todo-input"/>
+    <TodoList   id="todo-list""/>
+    <TodoFooter id="todo-footer"/>
   </div>
 </template>
 
@@ -12,18 +12,14 @@ import TodoHeader from './components/TodoHeader.vue';
 import TodoInput from './components/TodoInput.vue';
 import TodoList from './components/TodoList.vue';
 import TodoFooter from './components/TodoFooter.vue';
+
 const Todo = {
   components : {
-    'TodoHeader' : TodoHeader,
-    'TodoInput' : TodoInput,
-    'TodoList' : TodoList,
-    'TodoFooter' : TodoFooter
+    TodoHeader,
+    TodoInput,
+    TodoList,
+    TodoFooter
   },
-  methods : {
-    clearTodo : function(){
-      
-    }
-  }
 };
 export default Todo;
 </script>
@@ -32,6 +28,7 @@ export default Todo;
  body{
    text-align : center;
    background-color:#F6F6F6;
+   max-height: 500px;
  }
  input{
    border-style : groove;
@@ -43,4 +40,6 @@ export default Todo;
  .shadow {
    box-shadow : 5px 10px 10px rgba(0,0,0,0.03);
  }
+
 </style>
+ 
