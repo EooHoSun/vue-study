@@ -10,7 +10,7 @@ export default {
     methods : {
         ...mapMutations(['clearTodo'])
     }
-}
+};
 </script>
 
 <style scoped>
