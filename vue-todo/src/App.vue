@@ -21,6 +21,7 @@ const Todo = {
     TodoFooter
   },
 };
+
 export default Todo;
 </script>
 
